@@ -1,3 +1,15 @@
+export const metadata = {
+  title: "关于本项目 | 中外法律制度对照",
+  description:
+    "了解中外法律制度对照网站的项目定位、内容结构、MVP 范围与学习研究用途。",
+  openGraph: {
+    title: "关于本项目 | 中外法律制度对照",
+    description:
+      "了解中外法律制度对照网站的项目定位、内容结构、MVP 范围与学习研究用途。",
+    type: "website",
+  },
+};
+
 const contentSections = [
   "中国法规则",
   "大陆法系背景",

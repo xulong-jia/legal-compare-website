@@ -1,5 +1,17 @@
 import Link from "next/link";
 
+export const metadata = {
+  title: "中外法律制度对照 | 比较法学习知识库",
+  description:
+    "面向法学学习、比较法研究与涉外法律入门的结构化知识库，通过制度卡片对比中国法、大陆法系与英美法系规则。",
+  openGraph: {
+    title: "中外法律制度对照 | 比较法学习知识库",
+    description:
+      "面向法学学习、比较法研究与涉外法律入门的结构化知识库，通过制度卡片对比中国法、大陆法系与英美法系规则。",
+    type: "website",
+  },
+};
+
 const mvpItems = ["首页", "分类页", "卡片详情页", "关于页", "5 张合同法制度卡片"];
 const excludedItems = ["登录", "收藏", "评论", "付费", "AI 问答", "复杂搜索"];
 
