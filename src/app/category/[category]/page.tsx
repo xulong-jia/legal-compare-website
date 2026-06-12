@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getCardsByCategory } from "@/lib/cards";
@@ -9,6 +10,33 @@ type CategoryPageProps = {
     category: string;
   }>;
 };
+
+export async function generateMetadata({
+  params,
+}: CategoryPageProps): Promise<Metadata> {
+  const { category } = await params;
+  const categoryId = category as CategoryId;
+  const categoryConfig = getCategoryById(categoryId);
+
+  if (!categoryConfig) {
+    return {
+      title: "分类未找到 | 中外法律制度对照",
+      description: "该分类不存在或尚未收录。",
+    };
+  }
+
+  const title = `${categoryConfig.name} | 中外法律制度对照`;
+
+  return {
+    title,
+    description: categoryConfig.description,
+    openGraph: {
+      title,
+      description: categoryConfig.description,
+      type: "website",
+    },
+  };
+}
 
 export default async function CategoryPage({ params }: CategoryPageProps) {
   const { category } = await params;
