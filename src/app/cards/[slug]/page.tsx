@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getCardBySlug } from "@/lib/cards";
@@ -7,6 +8,32 @@ type CardPageProps = {
     slug: string;
   }>;
 };
+
+export async function generateMetadata({
+  params,
+}: CardPageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const card = getCardBySlug(slug);
+
+  if (!card) {
+    return {
+      title: "制度卡片未找到 | 中外法律制度对照",
+      description: "该制度卡片不存在或尚未收录。",
+    };
+  }
+
+  const title = `${card.title} | 中外法律制度对照`;
+
+  return {
+    title,
+    description: card.summary,
+    openGraph: {
+      title,
+      description: card.summary,
+      type: "article",
+    },
+  };
+}
 
 function renderContent(content: string) {
   return content
