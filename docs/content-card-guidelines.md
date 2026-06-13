@@ -57,6 +57,12 @@ common-law
 npm run validate:cards
 ```
 
+## 合同法卡片规划
+
+合同法卡片的长期规划见 `docs/contract-law-card-roadmap.md`。
+
+新增合同法卡片时，应先查看 roadmap 中建议的 `slug` 和 `order`。不要随意更改已有卡片的 `slug`，因为 URL、sitemap 和学习路径都会受影响。
+
 ## 检查流程
 
 新增或修改卡片后，本地运行：
