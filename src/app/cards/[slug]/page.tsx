@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getCardBySlug, getCardsByCategory } from "@/lib/cards";
+import { getCategoryById } from "@/lib/categories";
 
 type CardPageProps = {
   params: Promise<{
@@ -45,14 +46,14 @@ function renderContent(content: string) {
         const heading = line.replace(/^##\s+/, "");
 
         return (
-          <h2 key={line} className="mt-10 text-2xl font-semibold text-zinc-950">
+          <h2 key={line} className="mt-12 text-2xl font-semibold text-zinc-950">
             {heading}
           </h2>
         );
       }
 
       return (
-        <p key={line} className="mt-4 text-base leading-7 text-zinc-700">
+        <p key={line} className="mt-5 text-base leading-8 text-zinc-700">
           {line}
         </p>
       );
@@ -67,6 +68,11 @@ export default async function CardPage({ params }: CardPageProps) {
     notFound();
   }
 
+  const category = getCategoryById(card.category);
+  const categoryName = category?.name ?? card.category;
+  const learningPath = card.subcategory
+    ? `${categoryName} / ${card.subcategory}`
+    : categoryName;
   const categoryCards = getCardsByCategory(card.category);
   const currentIndex = categoryCards.findIndex(
     (categoryCard) => categoryCard.slug === card.slug,
@@ -95,6 +101,9 @@ export default async function CardPage({ params }: CardPageProps) {
           </h1>
           <p className="mt-5 text-base leading-7 text-zinc-700">
             {card.summary}
+          </p>
+          <p className="mt-4 text-sm text-zinc-600">
+            所属学习路径：{learningPath}
           </p>
 
           <dl className="mt-6 grid gap-4 text-sm text-zinc-600 sm:grid-cols-4">
@@ -134,36 +143,44 @@ export default async function CardPage({ params }: CardPageProps) {
           </div>
         </header>
 
-        <article className="mt-8">{renderContent(card.content)}</article>
+        <article className="mt-8">
+          <div className="rounded-md border border-zinc-200 bg-zinc-50 px-4 py-3 text-sm leading-6 text-zinc-700">
+            提示：本卡片用于学习与研究中的制度比较，不构成针对具体案件或交易的法律意见。
+          </div>
+          {renderContent(card.content)}
+        </article>
 
         {(previousCard || nextCard) && (
-          <nav className="mt-12 grid gap-4 border-t border-zinc-200 pt-8 sm:grid-cols-2">
-            {previousCard ? (
-              <Link
-                href={`/cards/${previousCard.slug}`}
-                className="rounded-md border border-zinc-200 p-4 text-sm text-zinc-700 hover:bg-zinc-50"
-              >
-                <span className="block text-xs text-zinc-500">上一篇</span>
-                <span className="mt-1 block font-medium text-zinc-950">
-                  {previousCard.title}
-                </span>
-              </Link>
-            ) : (
-              <div />
-            )}
+          <section className="mt-12 border-t border-zinc-200 pt-8">
+            <h2 className="text-lg font-semibold text-zinc-950">继续学习</h2>
+            <nav className="mt-4 grid gap-4 sm:grid-cols-2">
+              {previousCard ? (
+                <Link
+                  href={`/cards/${previousCard.slug}`}
+                  className="rounded-md border border-zinc-200 p-4 text-sm text-zinc-700 hover:bg-zinc-50"
+                >
+                  <span className="block text-xs text-zinc-500">上一篇</span>
+                  <span className="mt-1 block font-medium text-zinc-950">
+                    {previousCard.title}
+                  </span>
+                </Link>
+              ) : (
+                <div />
+              )}
 
-            {nextCard && (
-              <Link
-                href={`/cards/${nextCard.slug}`}
-                className="rounded-md border border-zinc-200 p-4 text-sm text-zinc-700 hover:bg-zinc-50 sm:text-right"
-              >
-                <span className="block text-xs text-zinc-500">下一篇</span>
-                <span className="mt-1 block font-medium text-zinc-950">
-                  {nextCard.title}
-                </span>
-              </Link>
-            )}
-          </nav>
+              {nextCard && (
+                <Link
+                  href={`/cards/${nextCard.slug}`}
+                  className="rounded-md border border-zinc-200 p-4 text-sm text-zinc-700 hover:bg-zinc-50 sm:text-right"
+                >
+                  <span className="block text-xs text-zinc-500">下一篇</span>
+                  <span className="mt-1 block font-medium text-zinc-950">
+                    {nextCard.title}
+                  </span>
+                </Link>
+              )}
+            </nav>
+          </section>
         )}
       </main>
     </div>
