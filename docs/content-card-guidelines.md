@@ -56,3 +56,21 @@ common-law
 ```bash
 npm run validate:cards
 ```
+
+## 检查流程
+
+新增或修改卡片后，本地运行：
+
+```bash
+npm run validate:cards
+npm run lint
+```
+
+推送到 GitHub 后，GitHub Actions 会自动运行：
+
+```bash
+npm run validate:cards
+npm run lint
+```
+
+当前 CI 暂不运行 `npm run build`。生产构建由 Vercel 执行。

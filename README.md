@@ -1,36 +1,52 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 中外法律制度对照网站 MVP
 
-## Getting Started
+这是一个面向法学学习、比较法研究与涉外法律入门的结构化知识库 MVP。
 
-First, run the development server:
+当前内容以 `content/cards/*.mdx` 中的制度卡片为核心，页面包括首页、关于页、分类页和卡片详情页。
+
+## 本地开发
+
+启动开发服务器：
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+访问：
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```text
+http://localhost:3000
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 检查命令
 
-## Learn More
+新增或修改 `content/cards/*.mdx` 后，先运行卡片内容校验：
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npm run validate:cards
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+运行 lint 检查：
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+npm run lint
+```
 
-## Deploy on Vercel
+运行综合检查：
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+npm run check
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+`npm run check` 会依次执行卡片校验、lint 和 build。
+
+## GitHub Actions 与部署
+
+push 到 GitHub 后，GitHub Actions 会自动运行：
+
+```bash
+npm run validate:cards
+npm run lint
+```
+
+当前 CI 暂不运行 `npm run build`。生产部署由 Vercel 自动完成，build 由 Vercel 处理。
