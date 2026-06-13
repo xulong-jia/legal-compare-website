@@ -11,6 +11,9 @@
 | 30 | `acceptance` | 承诺 | 入门 |
 | 40 | `consideration` | 对价 | 进阶 |
 | 50 | `breach-of-contract` | 违约责任 | 进阶 |
+| 60 | `contract-interpretation` | 合同解释 | 进阶 |
+| 70 | `standard-terms` | 格式条款 | 进阶 |
+| 80 | `contract-validity` | 合同效力 | 进阶 |
 
 现有顺序保持不变：先理解合同成立，再进入合同效力、合同履行与违约责任。
 
@@ -20,6 +23,7 @@
 
 ### 1. 合同解释
 
+- 状态：已完成
 - 建议 slug：`contract-interpretation`
 - 建议 order：60
 - 建议 difficulty：进阶
@@ -29,15 +33,17 @@
 
 ### 2. 格式条款
 
+- 状态：本轮新增，待提交
 - 建议 slug：`standard-terms`
 - 建议 order：70
-- 建议 difficulty：入门
+- 建议 difficulty：进阶
 - 建议 tags：`格式条款`、`消费者保护`、`合同解释`
 - 主要比较问题：格式条款的提示说明义务、异常条款控制、免责条款限制，以及普通法中 standard terms 的纳入和解释规则。
 - 为什么应该加入：格式条款高频出现在平台交易、消费合同和涉外合同中，能把合同成立、解释和公平控制连接起来。
 
 ### 3. 合同效力
 
+- 状态：本轮新增，待提交
 - 建议 slug：`contract-validity`
 - 建议 order：80
 - 建议 difficulty：进阶
