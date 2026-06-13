@@ -53,6 +53,26 @@ export default function Home() {
       </section>
 
       <section className="border-t border-zinc-200 bg-zinc-50">
+        <div className="mx-auto max-w-5xl px-4 py-10">
+          <div className="rounded-md border border-zinc-200 bg-white p-6">
+            <h2 className="text-xl font-semibold text-zinc-950">
+              合同法专题学习路径
+            </h2>
+            <p className="mt-3 text-sm leading-6 text-zinc-700">
+              已上线 10 张卡片，按“合同成立基础 / 合同内容、解释与效力 /
+              违约与救济”三个阶段组织。
+            </p>
+            <Link
+              href="/category/civil"
+              className="mt-5 inline-flex items-center justify-center rounded-md bg-zinc-950 px-4 py-2.5 text-sm font-medium text-white hover:bg-zinc-800"
+            >
+              进入合同法专题
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      <section className="border-t border-zinc-200 bg-zinc-50">
         <div className="mx-auto grid max-w-5xl gap-8 px-4 py-12 md:grid-cols-2">
           <div>
             <h2 className="text-lg font-semibold text-zinc-950">当前 MVP 范围</h2>

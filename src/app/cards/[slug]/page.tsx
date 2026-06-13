@@ -14,14 +14,17 @@ type CardPageProps = {
 const civilLearningStages = [
   {
     title: "合同成立基础",
+    id: "contract-formation-basics",
     slugs: ["invitation-to-treat", "offer", "acceptance", "consideration"],
   },
   {
     title: "合同内容、解释与效力",
+    id: "contract-content-validity",
     slugs: ["contract-interpretation", "standard-terms", "contract-validity"],
   },
   {
     title: "违约与救济",
+    id: "breach-and-remedies",
     slugs: ["breach-of-contract", "contract-termination", "damages"],
   },
 ];
@@ -113,6 +116,7 @@ function getLearningStage(card: LegalCard, categoryCards: LegalCard[]) {
 
   return {
     title: stage.title,
+    id: stage.id,
     cards: stage.slugs
       .map((slug) => categoryCards.find((item) => item.slug === slug))
       .filter((item): item is LegalCard => Boolean(item)),
@@ -233,6 +237,12 @@ export default async function CardPage({ params }: CardPageProps) {
                   );
                 })}
               </div>
+              <Link
+                href={`/category/${card.category}#${learningStage.id}`}
+                className="mt-4 inline-flex text-sm font-medium text-zinc-950 hover:text-zinc-700"
+              >
+                返回本阶段列表
+              </Link>
             </section>
           )}
           {renderContent(card.content)}
