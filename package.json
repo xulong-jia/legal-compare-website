@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "validate:cards": "node scripts/validate-cards.mjs",
+    "check": "npm run validate:cards && npm run lint && npm run build"
   },
   "dependencies": {
     "gray-matter": "^4.0.3",
