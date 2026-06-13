@@ -4,6 +4,8 @@
 
 当前内容以 `content/cards/*.mdx` 中的制度卡片为核心，页面包括首页、关于页、分类页和卡片详情页。
 
+当前合同法学习路径已包含 10 张卡片。
+
 合同法卡片扩展规划见 `docs/contract-law-card-roadmap.md`。
 
 ## 本地开发
