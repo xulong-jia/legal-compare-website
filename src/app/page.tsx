@@ -12,7 +12,7 @@ export const metadata = {
   },
 };
 
-const mvpItems = ["首页", "分类页", "卡片详情页", "关于页", "5 张合同法制度卡片"];
+const mvpItems = ["首页", "分类页", "卡片详情页", "关于页", "10 张合同法制度卡片"];
 const excludedItems = ["登录", "收藏", "评论", "付费", "AI 问答", "复杂搜索"];
 
 export default function Home() {
@@ -28,6 +28,9 @@ export default function Home() {
           </p>
           <p className="mt-6 text-base leading-7 text-zinc-600">
             本项目通过“制度卡片”对比中国法、大陆法系与英美法系中的重要法律规则。
+          </p>
+          <p className="mt-4 text-base leading-7 text-zinc-600">
+            当前已上线合同法专题学习路径，包含 10 张中外法律制度比较卡片。
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Link
