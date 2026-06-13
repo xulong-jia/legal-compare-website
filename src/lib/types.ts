@@ -18,6 +18,7 @@ export type CardFrontmatter = {
   systems: LegalSystem[];
   difficulty: "入门" | "进阶" | "专题";
   updatedAt: string;
+  order?: number;
 };
 
 export type LegalCard = CardFrontmatter & {

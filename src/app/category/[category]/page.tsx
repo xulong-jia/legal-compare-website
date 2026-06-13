@@ -63,6 +63,9 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
           <p className="mt-4 text-sm text-zinc-500">
             当前分类下共有 {cards.length} 张制度卡片。
           </p>
+          <p className="mt-2 text-sm text-zinc-500">
+            建议按卡片顺序阅读，先理解合同成立，再进入合同效力与违约责任。
+          </p>
         </section>
 
         <section className="mt-10">
@@ -72,19 +75,24 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
             </div>
           ) : (
             <div className="grid gap-4">
-              {cards.map((card) => (
+              {cards.map((card, index) => (
                 <article
                   key={card.slug}
                   className="rounded-md border border-zinc-200 p-6"
                 >
-                  <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-                    <div>
+                  <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+                    <div className="flex gap-4">
+                      <span className="shrink-0 text-sm font-semibold text-zinc-400">
+                        {String(index + 1).padStart(2, "0")}
+                      </span>
+                      <div>
                       <h2 className="text-xl font-semibold text-zinc-950">
                         {card.title}
                       </h2>
                       <p className="mt-3 text-sm leading-6 text-zinc-700">
                         {card.summary}
                       </p>
+                      </div>
                     </div>
                     <Link
                       href={`/cards/${card.slug}`}

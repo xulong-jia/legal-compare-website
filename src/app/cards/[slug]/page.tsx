@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getCardBySlug } from "@/lib/cards";
+import { getCardBySlug, getCardsByCategory } from "@/lib/cards";
 
 type CardPageProps = {
   params: Promise<{
@@ -67,6 +67,18 @@ export default async function CardPage({ params }: CardPageProps) {
     notFound();
   }
 
+  const categoryCards = getCardsByCategory(card.category);
+  const currentIndex = categoryCards.findIndex(
+    (categoryCard) => categoryCard.slug === card.slug,
+  );
+  const previousCard = currentIndex > 0 ? categoryCards[currentIndex - 1] : undefined;
+  const nextCard =
+    currentIndex >= 0 && currentIndex < categoryCards.length - 1
+      ? categoryCards[currentIndex + 1]
+      : undefined;
+  const learningProgress =
+    currentIndex >= 0 ? `第 ${currentIndex + 1} / ${categoryCards.length} 张` : undefined;
+
   return (
     <div className="bg-white">
       <main className="mx-auto max-w-4xl px-4 py-12 sm:py-16">
@@ -86,6 +98,12 @@ export default async function CardPage({ params }: CardPageProps) {
           </p>
 
           <dl className="mt-6 grid gap-4 text-sm text-zinc-600 sm:grid-cols-4">
+            {learningProgress && (
+              <div>
+                <dt className="font-medium text-zinc-900">学习进度</dt>
+                <dd className="mt-1">{learningProgress}</dd>
+              </div>
+            )}
             <div>
               <dt className="font-medium text-zinc-900">分类 ID</dt>
               <dd className="mt-1">{card.category}</dd>
@@ -117,6 +135,36 @@ export default async function CardPage({ params }: CardPageProps) {
         </header>
 
         <article className="mt-8">{renderContent(card.content)}</article>
+
+        {(previousCard || nextCard) && (
+          <nav className="mt-12 grid gap-4 border-t border-zinc-200 pt-8 sm:grid-cols-2">
+            {previousCard ? (
+              <Link
+                href={`/cards/${previousCard.slug}`}
+                className="rounded-md border border-zinc-200 p-4 text-sm text-zinc-700 hover:bg-zinc-50"
+              >
+                <span className="block text-xs text-zinc-500">上一篇</span>
+                <span className="mt-1 block font-medium text-zinc-950">
+                  {previousCard.title}
+                </span>
+              </Link>
+            ) : (
+              <div />
+            )}
+
+            {nextCard && (
+              <Link
+                href={`/cards/${nextCard.slug}`}
+                className="rounded-md border border-zinc-200 p-4 text-sm text-zinc-700 hover:bg-zinc-50 sm:text-right"
+              >
+                <span className="block text-xs text-zinc-500">下一篇</span>
+                <span className="mt-1 block font-medium text-zinc-950">
+                  {nextCard.title}
+                </span>
+              </Link>
+            )}
+          </nav>
+        )}
       </main>
     </div>
   );
