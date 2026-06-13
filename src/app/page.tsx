@@ -32,6 +32,9 @@ export default function Home() {
           <p className="mt-4 text-base leading-7 text-zinc-600">
             当前已上线合同法专题学习路径，包含 10 张中外法律制度比较卡片。
           </p>
+          <p className="mt-4 text-base leading-7 text-zinc-600">
+            学习路径按“合同成立基础 / 合同内容、解释与效力 / 违约与救济”组织。
+          </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Link
               href="/category/civil"

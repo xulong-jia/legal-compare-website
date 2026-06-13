@@ -11,6 +11,21 @@ type CardPageProps = {
   }>;
 };
 
+const civilLearningStages = [
+  {
+    title: "合同成立基础",
+    slugs: ["invitation-to-treat", "offer", "acceptance", "consideration"],
+  },
+  {
+    title: "合同内容、解释与效力",
+    slugs: ["contract-interpretation", "standard-terms", "contract-validity"],
+  },
+  {
+    title: "违约与救济",
+    slugs: ["breach-of-contract", "contract-termination", "damages"],
+  },
+];
+
 export function generateStaticParams() {
   return getAllCards().map((card) => ({
     slug: card.slug,
@@ -82,6 +97,28 @@ function getLearningPath(card: LegalCard) {
   };
 }
 
+function getCardNumber(cards: LegalCard[], card: LegalCard) {
+  const index = cards.findIndex((item) => item.slug === card.slug);
+  return String(index + 1).padStart(2, "0");
+}
+
+function getLearningStage(card: LegalCard, categoryCards: LegalCard[]) {
+  const stage = civilLearningStages.find((item) =>
+    item.slugs.includes(card.slug),
+  );
+
+  if (!stage) {
+    return undefined;
+  }
+
+  return {
+    title: stage.title,
+    cards: stage.slugs
+      .map((slug) => categoryCards.find((item) => item.slug === slug))
+      .filter((item): item is LegalCard => Boolean(item)),
+  };
+}
+
 export default async function CardPage({ params }: CardPageProps) {
   const { slug } = await params;
   const card = getCardBySlug(slug);
@@ -99,6 +136,7 @@ export default async function CardPage({ params }: CardPageProps) {
     getLearningPath(card);
   const learningProgress =
     currentIndex >= 0 ? `第 ${currentIndex + 1} / ${categoryCards.length} 张` : undefined;
+  const learningStage = getLearningStage(card, categoryCards);
 
   return (
     <div className="bg-white">
@@ -120,6 +158,11 @@ export default async function CardPage({ params }: CardPageProps) {
           <p className="mt-4 text-sm text-zinc-600">
             所属学习路径：{learningPath}
           </p>
+          {learningStage && (
+            <p className="mt-2 text-sm text-zinc-600">
+              所属阶段：{learningStage.title}
+            </p>
+          )}
 
           <dl className="mt-6 grid gap-4 text-sm text-zinc-600 sm:grid-cols-4">
             {learningProgress && (
@@ -162,6 +205,36 @@ export default async function CardPage({ params }: CardPageProps) {
           <div className="rounded-md border border-zinc-200 bg-zinc-50 px-4 py-3 text-sm leading-6 text-zinc-700">
             提示：本卡片用于学习与研究中的制度比较，不构成针对具体案件或交易的法律意见。
           </div>
+          {learningStage && (
+            <section className="mt-6 rounded-md border border-zinc-200 p-4">
+              <h2 className="text-base font-semibold text-zinc-950">
+                同阶段学习
+              </h2>
+              <div className="mt-3 grid gap-2 text-sm text-zinc-700">
+                {learningStage.cards.map((stageCard) => {
+                  const label = `${getCardNumber(categoryCards, stageCard)} ${stageCard.title}`;
+                  const isCurrentCard = stageCard.slug === card.slug;
+
+                  return isCurrentCard ? (
+                    <p
+                      key={stageCard.slug}
+                      className="rounded-md bg-zinc-100 px-3 py-2 font-medium text-zinc-950"
+                    >
+                      {label}（当前）
+                    </p>
+                  ) : (
+                    <Link
+                      key={stageCard.slug}
+                      href={`/cards/${stageCard.slug}`}
+                      className="rounded-md px-3 py-2 text-zinc-700 hover:bg-zinc-50 hover:text-zinc-950"
+                    >
+                      {label}
+                    </Link>
+                  );
+                })}
+              </div>
+            </section>
+          )}
           {renderContent(card.content)}
         </article>
 
