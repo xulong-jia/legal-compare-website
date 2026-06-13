@@ -1,14 +1,21 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getCardBySlug, getCardsByCategory } from "@/lib/cards";
+import { getAllCards, getCardBySlug, getCardsByCategory } from "@/lib/cards";
 import { getCategoryById } from "@/lib/categories";
+import type { LegalCard } from "@/lib/types";
 
 type CardPageProps = {
   params: Promise<{
     slug: string;
   }>;
 };
+
+export function generateStaticParams() {
+  return getAllCards().map((card) => ({
+    slug: card.slug,
+  }));
+}
 
 export async function generateMetadata({
   params,
@@ -60,6 +67,21 @@ function renderContent(content: string) {
     });
 }
 
+function getLearningPath(card: LegalCard) {
+  const categoryCards = getCardsByCategory(card.category);
+  const currentIndex = categoryCards.findIndex((item) => item.slug === card.slug);
+
+  return {
+    categoryCards,
+    currentIndex,
+    previousCard: currentIndex > 0 ? categoryCards[currentIndex - 1] : undefined,
+    nextCard:
+      currentIndex >= 0 && currentIndex < categoryCards.length - 1
+        ? categoryCards[currentIndex + 1]
+        : undefined,
+  };
+}
+
 export default async function CardPage({ params }: CardPageProps) {
   const { slug } = await params;
   const card = getCardBySlug(slug);
@@ -73,15 +95,8 @@ export default async function CardPage({ params }: CardPageProps) {
   const learningPath = card.subcategory
     ? `${categoryName} / ${card.subcategory}`
     : categoryName;
-  const categoryCards = getCardsByCategory(card.category);
-  const currentIndex = categoryCards.findIndex(
-    (categoryCard) => categoryCard.slug === card.slug,
-  );
-  const previousCard = currentIndex > 0 ? categoryCards[currentIndex - 1] : undefined;
-  const nextCard =
-    currentIndex >= 0 && currentIndex < categoryCards.length - 1
-      ? categoryCards[currentIndex + 1]
-      : undefined;
+  const { categoryCards, currentIndex, previousCard, nextCard } =
+    getLearningPath(card);
   const learningProgress =
     currentIndex >= 0 ? `第 ${currentIndex + 1} / ${categoryCards.length} 张` : undefined;
 

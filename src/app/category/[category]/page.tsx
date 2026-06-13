@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getCardsByCategory } from "@/lib/cards";
-import { getCategoryById } from "@/lib/categories";
+import { categories, getCategoryById } from "@/lib/categories";
 import type { CategoryId } from "@/lib/types";
 
 type CategoryPageProps = {
@@ -10,6 +10,12 @@ type CategoryPageProps = {
     category: string;
   }>;
 };
+
+export function generateStaticParams() {
+  return categories.map((category) => ({
+    category: category.id,
+  }));
+}
 
 export async function generateMetadata({
   params,

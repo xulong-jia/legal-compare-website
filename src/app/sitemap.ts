@@ -1,15 +1,9 @@
 import type { MetadataRoute } from "next";
+import { getAllCards } from "@/lib/cards";
+import { categories } from "@/lib/categories";
 
 const siteUrl = "https://legal-compare-website.vercel.app";
 const lastModified = new Date("2026-06-12");
-
-const cardSlugs = [
-  "offer",
-  "acceptance",
-  "consideration",
-  "invitation-to-treat",
-  "breach-of-contract",
-];
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
@@ -25,14 +19,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.5,
     },
-    {
-      url: `${siteUrl}/category/civil`,
+    ...categories.map((category) => ({
+      url: `${siteUrl}/category/${category.id}`,
       lastModified,
-      changeFrequency: "weekly",
+      changeFrequency: "weekly" as const,
       priority: 0.8,
-    },
-    ...cardSlugs.map((slug) => ({
-      url: `${siteUrl}/cards/${slug}`,
+    })),
+    ...getAllCards().map((card) => ({
+      url: `${siteUrl}/cards/${card.slug}`,
       lastModified,
       changeFrequency: "monthly" as const,
       priority: 0.7,
