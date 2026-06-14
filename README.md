@@ -24,6 +24,10 @@ npm run validate:cards
 
 合同法卡片扩展规划见 `docs/contract-law-card-roadmap.md`。
 
+合同法专题内容审校报告见 `docs/contract-law-content-review.md`。
+
+标签、难度与阶段筛选功能设计见 `docs/filtering-design.md`。
+
 ## 本地开发
 
 启动开发服务器：
