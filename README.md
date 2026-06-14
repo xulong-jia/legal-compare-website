@@ -14,6 +14,14 @@
 
 合同法专题总览页：`/topics/contract-law`，用于展示专题完成度、三阶段学习路径和阅读建议。
 
+合同法专题配置集中维护在 `src/lib/contractLawTopic.ts`，底层数据在 `src/lib/contractLawTopicData.js`，供页面和校验脚本复用。
+
+新增或调整合同法阶段时，应同步更新共享配置并运行：
+
+```bash
+npm run validate:cards
+```
+
 合同法卡片扩展规划见 `docs/contract-law-card-roadmap.md`。
 
 ## 本地开发

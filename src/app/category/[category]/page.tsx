@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getCardsByCategory } from "@/lib/cards";
 import { categories, getCategoryById } from "@/lib/categories";
+import { contractLawStages, contractLawTopic } from "@/lib/contractLawTopic";
 import type { CategoryId, LegalCard } from "@/lib/types";
 
 type CategoryPageProps = {
@@ -10,30 +11,6 @@ type CategoryPageProps = {
     category: string;
   }>;
 };
-
-const civilLearningStages = [
-  {
-    title: "合同成立基础",
-    id: "contract-formation-basics",
-    description: "理解合同如何从交易接触、要约、承诺到可执行基础逐步形成。",
-    readingGoal: "先理解合同如何从交易接触走向成立。",
-    slugs: ["invitation-to-treat", "offer", "acceptance", "consideration"],
-  },
-  {
-    title: "合同内容、解释与效力",
-    id: "contract-content-validity",
-    description: "理解合同文本如何被解释，标准化条款如何受到控制，以及合同是否有效。",
-    readingGoal: "再理解合同文本如何被解释、限制和评价。",
-    slugs: ["contract-interpretation", "standard-terms", "contract-validity"],
-  },
-  {
-    title: "违约与救济",
-    id: "breach-and-remedies",
-    description: "理解违约发生后责任如何判断，合同关系如何退出，以及损害如何被赔偿。",
-    readingGoal: "最后理解违约发生后如何退出合同和计算赔偿。",
-    slugs: ["breach-of-contract", "contract-termination", "damages"],
-  },
-];
 
 function getCardNumber(cards: LegalCard[], card: LegalCard) {
   const index = cards.findIndex((item) => item.slug === card.slug);
@@ -143,7 +120,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
   }
 
   const cards = getCardsByCategory(categoryId);
-  const isCivilCategory = categoryId === "civil";
+  const isCivilCategory = categoryId === contractLawTopic.categoryId;
 
   return (
     <div className="bg-white">
@@ -178,13 +155,13 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                   合同法专题学习路径
                 </h2>
                 <p className="mt-3 text-sm leading-6 text-zinc-700">
-                  本专题目前包含 10 张卡片，按照“合同成立 → 合同解释与效力 →
+                  本专题目前包含 {contractLawTopic.cardCount} 张卡片，按照“合同成立 → 合同解释与效力 →
                   违约与救济”的顺序组织，适合从基础概念逐步进入制度比较。
                 </p>
                 <div className="mt-5">
                   <p className="text-sm font-medium text-zinc-900">快速跳转：</p>
                   <div className="mt-3 flex flex-wrap gap-2">
-                    {civilLearningStages.map((stage) => (
+                    {contractLawStages.map((stage) => (
                       <Link
                         key={stage.id}
                         href={`#${stage.id}`}
@@ -197,7 +174,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                 </div>
               </div>
 
-              {civilLearningStages.map((stage) => {
+              {contractLawStages.map((stage) => {
                 const stageCards = stage.slugs
                   .map((slug) => cards.find((card) => card.slug === slug))
                   .filter((card): card is LegalCard => Boolean(card));

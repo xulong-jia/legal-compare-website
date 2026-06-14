@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { contractLawTopic } from "@/lib/contractLawTopic";
 
 export const metadata = {
   title: "中外法律制度对照 | 比较法学习知识库",
@@ -12,7 +13,13 @@ export const metadata = {
   },
 };
 
-const mvpItems = ["首页", "分类页", "卡片详情页", "关于页", "10 张合同法制度卡片"];
+const mvpItems = [
+  "首页",
+  "分类页",
+  "卡片详情页",
+  "关于页",
+  `${contractLawTopic.cardCount} 张合同法制度卡片`,
+];
 const excludedItems = ["登录", "收藏", "评论", "付费", "AI 问答", "复杂搜索"];
 
 export default function Home() {
@@ -30,7 +37,7 @@ export default function Home() {
             本项目通过“制度卡片”对比中国法、大陆法系与英美法系中的重要法律规则。
           </p>
           <p className="mt-4 text-base leading-7 text-zinc-600">
-            当前已上线合同法专题学习路径，包含 10 张中外法律制度比较卡片。
+            当前已上线合同法专题学习路径，包含 {contractLawTopic.cardCount} 张中外法律制度比较卡片。
           </p>
           <p className="mt-4 text-base leading-7 text-zinc-600">
             学习路径按“合同成立基础 / 合同内容、解释与效力 / 违约与救济”组织。
@@ -64,13 +71,13 @@ export default function Home() {
             </p>
             <div className="mt-5 flex flex-col gap-3 sm:flex-row">
               <Link
-                href="/category/civil"
+                href={contractLawTopic.categoryPath}
                 className="inline-flex items-center justify-center rounded-md bg-zinc-950 px-4 py-2.5 text-sm font-medium text-white hover:bg-zinc-800"
               >
                 进入合同法专题
               </Link>
               <Link
-                href="/topics/contract-law"
+                href={contractLawTopic.overviewPath}
                 className="inline-flex items-center justify-center rounded-md border border-zinc-300 px-4 py-2.5 text-sm font-medium text-zinc-900 hover:bg-zinc-50"
               >
                 查看专题总览

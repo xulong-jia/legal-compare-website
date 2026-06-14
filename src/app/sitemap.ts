@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { getAllCards } from "@/lib/cards";
 import { categories } from "@/lib/categories";
+import { contractLawTopic } from "@/lib/contractLawTopic";
 
 const siteUrl = "https://legal-compare-website.vercel.app";
 const lastModified = new Date("2026-06-12");
@@ -20,7 +21,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.5,
     },
     {
-      url: `${siteUrl}/topics/contract-law`,
+      url: `${siteUrl}${contractLawTopic.overviewPath}`,
       lastModified,
       changeFrequency: "weekly",
       priority: 0.8,

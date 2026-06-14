@@ -3,6 +3,10 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getAllCards, getCardBySlug, getCardsByCategory } from "@/lib/cards";
 import { getCategoryById } from "@/lib/categories";
+import {
+  getContractLawStageBySlug,
+  getContractLawStageHref,
+} from "@/lib/contractLawTopic";
 import type { LegalCard } from "@/lib/types";
 
 type CardPageProps = {
@@ -10,24 +14,6 @@ type CardPageProps = {
     slug: string;
   }>;
 };
-
-const civilLearningStages = [
-  {
-    title: "合同成立基础",
-    id: "contract-formation-basics",
-    slugs: ["invitation-to-treat", "offer", "acceptance", "consideration"],
-  },
-  {
-    title: "合同内容、解释与效力",
-    id: "contract-content-validity",
-    slugs: ["contract-interpretation", "standard-terms", "contract-validity"],
-  },
-  {
-    title: "违约与救济",
-    id: "breach-and-remedies",
-    slugs: ["breach-of-contract", "contract-termination", "damages"],
-  },
-];
 
 export function generateStaticParams() {
   return getAllCards().map((card) => ({
@@ -106,9 +92,7 @@ function getCardNumber(cards: LegalCard[], card: LegalCard) {
 }
 
 function getLearningStage(card: LegalCard, categoryCards: LegalCard[]) {
-  const stage = civilLearningStages.find((item) =>
-    item.slugs.includes(card.slug),
-  );
+  const stage = getContractLawStageBySlug(card.slug);
 
   if (!stage) {
     return undefined;
@@ -238,7 +222,7 @@ export default async function CardPage({ params }: CardPageProps) {
                 })}
               </div>
               <Link
-                href={`/category/${card.category}#${learningStage.id}`}
+                href={getContractLawStageHref(card.slug)}
                 className="mt-4 inline-flex text-sm font-medium text-zinc-950 hover:text-zinc-700"
               >
                 返回本阶段列表

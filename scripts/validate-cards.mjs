@@ -1,8 +1,10 @@
 import fs from "node:fs";
 import path from "node:path";
 import matter from "gray-matter";
+import topicData from "../src/lib/contractLawTopicData.js";
 
 const cardsDirectory = path.join(process.cwd(), "content", "cards");
+const { contractLawStages } = topicData;
 
 const validCategories = new Set([
   "civil",
@@ -137,6 +139,46 @@ function validateCard(fileName, data, seenSlugs, seenOrders, issues) {
   }
 }
 
+function validateContractLawStages(cardsBySlug, issues) {
+  const configuredSlugs = new Map();
+
+  for (const stage of contractLawStages) {
+    for (const slug of stage.slugs) {
+      const previousStage = configuredSlugs.get(slug);
+
+      if (previousStage) {
+        addIssue(
+          issues,
+          "contractLawStages",
+          `duplicate slug "${slug}" in "${stage.title}" also used by "${previousStage}"`,
+        );
+      } else {
+        configuredSlugs.set(slug, stage.title);
+      }
+
+      if (!cardsBySlug.has(slug)) {
+        addIssue(
+          issues,
+          "contractLawStages",
+          `slug "${slug}" in "${stage.title}" does not match any MDX card`,
+        );
+      }
+    }
+  }
+
+  for (const [slug, card] of cardsBySlug) {
+    if (card.data.category === "civil" && card.data.subcategory === "合同法") {
+      if (!configuredSlugs.has(slug)) {
+        addIssue(
+          issues,
+          card.fileName,
+          `civil contract law card "${slug}" is not included in contractLawStages`,
+        );
+      }
+    }
+  }
+}
+
 function main() {
   if (!fs.existsSync(cardsDirectory)) {
     console.error("content/cards directory does not exist.");
@@ -150,6 +192,7 @@ function main() {
   const issues = [];
   const seenSlugs = new Map();
   const seenOrders = new Map();
+  const cardsBySlug = new Map();
 
   for (const fileName of fileNames) {
     const filePath = path.join(cardsDirectory, fileName);
@@ -157,7 +200,16 @@ function main() {
     const { data } = matter(fileContent);
 
     validateCard(fileName, data, seenSlugs, seenOrders, issues);
+
+    if (isNonEmptyString(data.slug)) {
+      cardsBySlug.set(data.slug, {
+        data,
+        fileName,
+      });
+    }
   }
+
+  validateContractLawStages(cardsBySlug, issues);
 
   if (issues.length > 0) {
     console.error("Card validation failed:");
@@ -170,6 +222,7 @@ function main() {
   }
 
   console.log(`Validated ${fileNames.length} card(s). No issues found.`);
+  console.log("Validated contract law topic stages.");
 }
 
 main();
