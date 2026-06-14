@@ -19,6 +19,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.5,
     },
+    {
+      url: `${siteUrl}/topics/contract-law`,
+      lastModified,
+      changeFrequency: "weekly",
+      priority: 0.8,
+    },
     ...categories.map((category) => ({
       url: `${siteUrl}/category/${category.id}`,
       lastModified,

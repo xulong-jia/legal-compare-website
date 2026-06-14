@@ -62,12 +62,20 @@ export default function Home() {
               已上线 10 张卡片，按“合同成立基础 / 合同内容、解释与效力 /
               违约与救济”三个阶段组织。
             </p>
-            <Link
-              href="/category/civil"
-              className="mt-5 inline-flex items-center justify-center rounded-md bg-zinc-950 px-4 py-2.5 text-sm font-medium text-white hover:bg-zinc-800"
-            >
-              进入合同法专题
-            </Link>
+            <div className="mt-5 flex flex-col gap-3 sm:flex-row">
+              <Link
+                href="/category/civil"
+                className="inline-flex items-center justify-center rounded-md bg-zinc-950 px-4 py-2.5 text-sm font-medium text-white hover:bg-zinc-800"
+              >
+                进入合同法专题
+              </Link>
+              <Link
+                href="/topics/contract-law"
+                className="inline-flex items-center justify-center rounded-md border border-zinc-300 px-4 py-2.5 text-sm font-medium text-zinc-900 hover:bg-zinc-50"
+              >
+                查看专题总览
+              </Link>
+            </div>
           </div>
         </div>
       </section>
