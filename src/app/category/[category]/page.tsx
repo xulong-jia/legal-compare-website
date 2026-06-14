@@ -25,14 +25,14 @@ function CardListItem({
   number: string;
 }) {
   return (
-    <article className="rounded-md border border-zinc-200 p-6">
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+    <article className="rounded-md border border-zinc-200 bg-white p-5 shadow-sm sm:p-6">
+      <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
         <div className="flex gap-4">
-          <span className="shrink-0 text-sm font-semibold text-zinc-400">
+          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-zinc-100 text-sm font-semibold text-zinc-700">
             {number}
           </span>
           <div>
-            <h2 className="text-xl font-semibold text-zinc-950">
+            <h2 className="text-lg font-semibold text-zinc-950 sm:text-xl">
               {card.title}
             </h2>
             <p className="mt-3 text-sm leading-6 text-zinc-700">
@@ -42,22 +42,22 @@ function CardListItem({
         </div>
         <Link
           href={`/cards/${card.slug}`}
-          className="shrink-0 text-sm font-medium text-zinc-950 hover:text-zinc-700"
+          className="inline-flex shrink-0 items-center justify-center rounded-md border border-zinc-300 px-3 py-2 text-sm font-medium text-zinc-950 hover:bg-zinc-50"
         >
           进入详情页
         </Link>
       </div>
 
-      <dl className="mt-5 grid gap-3 text-sm text-zinc-600 sm:grid-cols-3">
-        <div>
+      <dl className="mt-5 grid gap-3 rounded-md bg-zinc-50 p-4 text-sm text-zinc-600 sm:grid-cols-3">
+        <div className="min-w-0">
           <dt className="font-medium text-zinc-900">子分类</dt>
           <dd className="mt-1">{card.subcategory ?? "未分类"}</dd>
         </div>
-        <div>
+        <div className="min-w-0">
           <dt className="font-medium text-zinc-900">难度</dt>
           <dd className="mt-1">{card.difficulty}</dd>
         </div>
-        <div>
+        <div className="min-w-0">
           <dt className="font-medium text-zinc-900">更新时间</dt>
           <dd className="mt-1">{card.updatedAt}</dd>
         </div>
@@ -150,7 +150,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
             </div>
           ) : isCivilCategory ? (
             <div className="space-y-8">
-              <div className="rounded-md border border-zinc-200 bg-zinc-50 p-6">
+              <div className="rounded-md border border-zinc-200 bg-zinc-50 p-6 shadow-sm">
                 <h2 className="text-xl font-semibold text-zinc-950">
                   合同法专题学习路径
                 </h2>
@@ -173,25 +173,32 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                 </div>
               </div>
 
-              {contractLawStages.map((stage) => {
+              {contractLawStages.map((stage, stageIndex) => {
                 const stageCards = stage.slugs
                   .map((slug) => cards.find((card) => card.slug === slug))
                   .filter((card): card is LegalCard => Boolean(card));
 
                 return (
-                  <section key={stage.id} id={stage.id}>
-                    <div className="border-b border-zinc-200 pb-4">
-                      <h2 className="text-lg font-semibold text-zinc-950">
+                  <section
+                    key={stage.id}
+                    id={stage.id}
+                    className="scroll-mt-6 rounded-md border border-zinc-200 bg-zinc-50 p-5 sm:p-6"
+                  >
+                    <div className="rounded-md border border-zinc-200 bg-white p-5">
+                      <p className="text-sm font-medium text-zinc-500">
+                        阶段 {stageIndex + 1}
+                      </p>
+                      <h2 className="mt-2 text-xl font-semibold text-zinc-950">
                         {stage.title}
                       </h2>
-                      <p className="mt-2 text-sm leading-6 text-zinc-600">
+                      <p className="mt-3 text-sm leading-6 text-zinc-700">
                         {stage.description}
                       </p>
-                      <p className="mt-1 text-sm leading-6 text-zinc-500">
+                      <p className="mt-3 rounded-md bg-zinc-50 px-3 py-2 text-sm leading-6 text-zinc-600">
                         建议阅读目标：{stage.readingGoal}
                       </p>
                     </div>
-                    <div className="mt-4 grid gap-4">
+                    <div className="mt-5 grid gap-4">
                       {stageCards.map((card) => (
                         <CardListItem
                           key={card.slug}

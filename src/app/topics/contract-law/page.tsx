@@ -5,6 +5,7 @@ import {
   contractLawTopic,
   getContractLawStageHref,
 } from "@/lib/contractLawTopic";
+import type { LegalCard } from "@/lib/types";
 
 export const metadata = {
   title: "合同法专题 | 中外法律制度对照",
@@ -56,45 +57,65 @@ export default function ContractLawTopicPage() {
         </section>
 
         <section className="mt-10 rounded-md border border-zinc-200 bg-zinc-50 p-6">
-          <h2 className="text-xl font-semibold text-zinc-950">当前完成度</h2>
-          <p className="mt-3 text-sm leading-6 text-zinc-700">
-            当前已上线 {contractLawTopic.cardCount} 张卡片，覆盖合同成立、合同解释与效力、违约与救济、进阶专题与特殊情形四个阶段。
-          </p>
+          <div className="grid gap-5 sm:grid-cols-[1fr_auto] sm:items-center">
+            <div>
+              <h2 className="text-xl font-semibold text-zinc-950">当前完成度</h2>
+              <p className="mt-3 text-sm leading-6 text-zinc-700">
+                当前已上线 {contractLawTopic.cardCount} 张卡片，覆盖合同成立、合同解释与效力、违约与救济、进阶专题与特殊情形四个阶段。
+              </p>
+            </div>
+            <div className="rounded-md border border-zinc-200 bg-white px-5 py-4 text-center">
+              <span className="block text-2xl font-semibold text-zinc-950">
+                {contractLawTopic.cardCount}
+              </span>
+              <span className="mt-1 block text-xs text-zinc-500">张卡片</span>
+            </div>
+          </div>
         </section>
 
         <section className="mt-10">
           <h2 className="text-xl font-semibold text-zinc-950">四阶段学习路径</h2>
-          <div className="mt-5 grid gap-4">
-            {contractLawStages.map((stage) => {
+          <div className="mt-5 grid gap-5">
+            {contractLawStages.map((stage, stageIndex) => {
               const stageCards = stage.slugs
                 .map((slug) => cards.find((card) => card.slug === slug))
-                .filter((card) => Boolean(card));
+                .filter((card): card is LegalCard => Boolean(card));
 
               return (
-              <article
-                key={stage.id}
-                className="rounded-md border border-zinc-200 p-6"
-              >
-                <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-                  <div>
-                    <h3 className="text-lg font-semibold text-zinc-950">
-                      {stage.title}
-                    </h3>
-                    <p className="mt-2 text-sm leading-6 text-zinc-600">
-                      {stage.readingGoal}
-                    </p>
-                    <p className="mt-3 text-sm leading-6 text-zinc-700">
-                      {stageCards.map((card) => card?.title).join("、")}
-                    </p>
+                <article
+                  key={stage.id}
+                  className="rounded-md border border-zinc-200 bg-white p-5 shadow-sm sm:p-6"
+                >
+                  <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+                    <div>
+                      <p className="text-sm font-medium text-zinc-500">
+                        阶段 {stageIndex + 1}
+                      </p>
+                      <h3 className="mt-2 text-lg font-semibold text-zinc-950">
+                        {stage.title}
+                      </h3>
+                      <p className="mt-2 text-sm leading-6 text-zinc-600">
+                        {stage.readingGoal}
+                      </p>
+                    </div>
+                    <Link
+                      href={getContractLawStageHref(stage.slugs[0])}
+                      className="inline-flex shrink-0 items-center justify-center rounded-md border border-zinc-300 px-3 py-2 text-sm font-medium text-zinc-950 hover:bg-zinc-50"
+                    >
+                      查看本阶段
+                    </Link>
                   </div>
-                  <Link
-                    href={getContractLawStageHref(stage.slugs[0])}
-                    className="shrink-0 text-sm font-medium text-zinc-950 hover:text-zinc-700"
-                  >
-                    查看本阶段
-                  </Link>
-                </div>
-              </article>
+                  <div className="mt-5 grid gap-2 sm:grid-cols-2">
+                    {stageCards.map((card) => (
+                      <div
+                        key={card.slug}
+                        className="rounded-md bg-zinc-50 px-3 py-2 text-sm text-zinc-700"
+                      >
+                        {card.title}
+                      </div>
+                    ))}
+                  </div>
+                </article>
               );
             })}
           </div>

@@ -143,35 +143,37 @@ export default async function CardPage({ params }: CardPageProps) {
           <p className="mt-5 text-base leading-7 text-zinc-700">
             {card.summary}
           </p>
-          <p className="mt-4 text-sm text-zinc-600">
-            所属学习路径：{learningPath}
-          </p>
-          {learningStage && (
-            <p className="mt-2 text-sm text-zinc-600">
-              所属阶段：{learningStage.title}
-            </p>
-          )}
+          <div className="mt-5 flex flex-wrap gap-2 text-sm">
+            <span className="rounded-md bg-zinc-100 px-3 py-1.5 text-zinc-700">
+              所属学习路径：{learningPath}
+            </span>
+            {learningStage && (
+              <span className="rounded-md bg-zinc-100 px-3 py-1.5 text-zinc-700">
+                所属阶段：{learningStage.title}
+              </span>
+            )}
+          </div>
 
-          <dl className="mt-6 grid gap-4 text-sm text-zinc-600 sm:grid-cols-4">
+          <dl className="mt-6 grid gap-4 rounded-md border border-zinc-200 bg-zinc-50 p-4 text-sm text-zinc-600 sm:grid-cols-5">
             {learningProgress && (
-              <div>
+              <div className="min-w-0">
                 <dt className="font-medium text-zinc-900">学习进度</dt>
                 <dd className="mt-1">{learningProgress}</dd>
               </div>
             )}
-            <div>
+            <div className="min-w-0">
               <dt className="font-medium text-zinc-900">分类 ID</dt>
               <dd className="mt-1">{card.category}</dd>
             </div>
-            <div>
+            <div className="min-w-0">
               <dt className="font-medium text-zinc-900">子分类</dt>
               <dd className="mt-1">{card.subcategory ?? "未分类"}</dd>
             </div>
-            <div>
+            <div className="min-w-0">
               <dt className="font-medium text-zinc-900">难度</dt>
               <dd className="mt-1">{card.difficulty}</dd>
             </div>
-            <div>
+            <div className="min-w-0">
               <dt className="font-medium text-zinc-900">更新时间</dt>
               <dd className="mt-1">{card.updatedAt}</dd>
             </div>
@@ -190,15 +192,28 @@ export default async function CardPage({ params }: CardPageProps) {
         </header>
 
         <article className="mt-8">
-          <div className="rounded-md border border-zinc-200 bg-zinc-50 px-4 py-3 text-sm leading-6 text-zinc-700">
+          <div className="rounded-md border border-amber-200 bg-amber-50 px-4 py-3 text-sm leading-6 text-amber-950">
             提示：本卡片用于学习与研究中的制度比较，不构成针对具体案件或交易的法律意见。
           </div>
           {learningStage && (
-            <section className="mt-6 rounded-md border border-zinc-200 p-4">
-              <h2 className="text-base font-semibold text-zinc-950">
-                同阶段学习
-              </h2>
-              <div className="mt-3 grid gap-2 text-sm text-zinc-700">
+            <section className="mt-6 rounded-md border border-zinc-200 bg-white p-5 shadow-sm">
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                <div>
+                  <h2 className="text-base font-semibold text-zinc-950">
+                    同阶段学习
+                  </h2>
+                  <p className="mt-1 text-sm leading-6 text-zinc-600">
+                    查看“{learningStage.title}”阶段中的相邻主题。
+                  </p>
+                </div>
+                <Link
+                  href={getContractLawStageHref(card.slug)}
+                  className="inline-flex items-center justify-center rounded-md border border-zinc-300 px-3 py-2 text-sm font-medium text-zinc-950 hover:bg-zinc-50"
+                >
+                  返回本阶段列表
+                </Link>
+              </div>
+              <div className="mt-4 grid gap-2 text-sm text-zinc-700 sm:grid-cols-2">
                 {learningStage.cards.map((stageCard) => {
                   const label = `${getCardNumber(categoryCards, stageCard)} ${stageCard.title}`;
                   const isCurrentCard = stageCard.slug === card.slug;
@@ -221,25 +236,22 @@ export default async function CardPage({ params }: CardPageProps) {
                   );
                 })}
               </div>
-              <Link
-                href={getContractLawStageHref(card.slug)}
-                className="mt-4 inline-flex text-sm font-medium text-zinc-950 hover:text-zinc-700"
-              >
-                返回本阶段列表
-              </Link>
             </section>
           )}
           {renderContent(card.content)}
         </article>
 
         {(previousCard || nextCard) && (
-          <section className="mt-12 border-t border-zinc-200 pt-8">
+          <section className="mt-12 rounded-md border border-zinc-200 bg-zinc-50 p-5 sm:p-6">
             <h2 className="text-lg font-semibold text-zinc-950">继续学习</h2>
+            <p className="mt-2 text-sm leading-6 text-zinc-600">
+              按合同法专题整体顺序继续阅读。
+            </p>
             <nav className="mt-4 grid gap-4 sm:grid-cols-2">
               {previousCard ? (
                 <Link
                   href={`/cards/${previousCard.slug}`}
-                  className="rounded-md border border-zinc-200 p-4 text-sm text-zinc-700 hover:bg-zinc-50"
+                  className="rounded-md border border-zinc-200 bg-white p-4 text-sm text-zinc-700 hover:bg-zinc-50"
                 >
                   <span className="block text-xs text-zinc-500">上一篇</span>
                   <span className="mt-1 block font-medium text-zinc-950">
@@ -253,7 +265,7 @@ export default async function CardPage({ params }: CardPageProps) {
               {nextCard && (
                 <Link
                   href={`/cards/${nextCard.slug}`}
-                  className="rounded-md border border-zinc-200 p-4 text-sm text-zinc-700 hover:bg-zinc-50 sm:text-right"
+                  className="rounded-md border border-zinc-200 bg-white p-4 text-sm text-zinc-700 hover:bg-zinc-50 sm:text-right"
                 >
                   <span className="block text-xs text-zinc-500">下一篇</span>
                   <span className="mt-1 block font-medium text-zinc-950">
