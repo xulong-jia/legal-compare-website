@@ -1,6 +1,6 @@
 const contractLawTopic = {
   title: "合同法专题",
-  cardCount: 10,
+  cardCount: 12,
   categoryId: "civil",
   categoryPath: "/category/civil",
   overviewPath: "/topics/contract-law",
@@ -27,6 +27,13 @@ const contractLawStages = [
     description: "理解违约发生后责任如何判断，合同关系如何退出，以及损害如何被赔偿。",
     readingGoal: "最后理解违约发生后如何退出合同和计算赔偿。",
     slugs: ["breach-of-contract", "contract-termination", "damages"],
+  },
+  {
+    id: "advanced-special-issues",
+    title: "进阶专题与特殊情形",
+    description: "理解不可抗力、合同成立特殊场景等不属于基础路径但会影响实务判断的进阶问题。",
+    readingGoal: "最后补充理解合同法中的例外情形、风险分配和复杂交易场景。",
+    slugs: ["force-majeure", "contract-formation-special-cases"],
   },
 ];
 

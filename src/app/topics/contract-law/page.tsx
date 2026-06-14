@@ -9,11 +9,11 @@ import {
 export const metadata = {
   title: "合同法专题 | 中外法律制度对照",
   description:
-    "合同法专题总览，展示 10 张制度卡片的完成度、三阶段学习路径、阅读建议和后续扩展方向。",
+    "合同法专题总览，展示 12 张制度卡片的完成度、四阶段学习路径、阅读建议和后续扩展方向。",
   openGraph: {
     title: "合同法专题 | 中外法律制度对照",
     description:
-      "合同法专题总览，展示 10 张制度卡片的完成度、三阶段学习路径、阅读建议和后续扩展方向。",
+      "合同法专题总览，展示 12 张制度卡片的完成度、四阶段学习路径、阅读建议和后续扩展方向。",
     type: "website",
   },
 };
@@ -22,6 +22,7 @@ const readingTips = [
   "如果是初学者，建议从“要约邀请”开始顺序阅读。",
   "如果已经了解合同成立，可以直接从“合同解释”或“合同效力”进入。",
   "如果关注违约救济，可以从“违约责任”进入，再阅读“合同解除”和“损害赔偿”。",
+  "如果已经完成前三个阶段，可以继续阅读“不可抗力”和“合同成立的特殊场景”，理解合同法中的例外情形和复杂交易场景。",
 ];
 
 export default function ContractLawTopicPage() {
@@ -57,12 +58,12 @@ export default function ContractLawTopicPage() {
         <section className="mt-10 rounded-md border border-zinc-200 bg-zinc-50 p-6">
           <h2 className="text-xl font-semibold text-zinc-950">当前完成度</h2>
           <p className="mt-3 text-sm leading-6 text-zinc-700">
-            当前已上线 {contractLawTopic.cardCount} 张卡片，覆盖合同成立、合同解释与效力、违约与救济三个阶段。
+            当前已上线 {contractLawTopic.cardCount} 张卡片，覆盖合同成立、合同解释与效力、违约与救济、进阶专题与特殊情形四个阶段。
           </p>
         </section>
 
         <section className="mt-10">
-          <h2 className="text-xl font-semibold text-zinc-950">三阶段学习路径</h2>
+          <h2 className="text-xl font-semibold text-zinc-950">四阶段学习路径</h2>
           <div className="mt-5 grid gap-4">
             {contractLawStages.map((stage) => {
               const stageCards = stage.slugs
@@ -112,7 +113,7 @@ export default function ContractLawTopicPage() {
           <div>
             <h2 className="text-xl font-semibold text-zinc-950">后续扩展方向</h2>
             <p className="mt-4 text-sm leading-6 text-zinc-700">
-              后续计划继续补充不可抗力、合同成立的特殊场景等内容，用于衔接履行障碍和现代交易场景。
+              后续可继续扩展合同履行、合同变更、第三人利益合同等主题。
             </p>
           </div>
         </section>

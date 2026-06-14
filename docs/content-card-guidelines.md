@@ -61,7 +61,15 @@ npm run validate:cards
 
 合同法卡片的长期规划见 `docs/contract-law-card-roadmap.md`。
 
+当前合同法专题包含 12 张卡片，专题阶段配置由 `src/lib/contractLawTopicData.js` 统一维护。
+
 新增合同法卡片时，应先查看 roadmap 中建议的 `slug` 和 `order`。不要随意更改已有卡片的 `slug`，因为 URL、sitemap 和学习路径都会受影响。
+
+新增合同法卡片时，必须同时完成：
+
+1. 新增 `content/cards/*.mdx` 文件。
+2. 更新 `src/lib/contractLawTopicData.js` 中的阶段配置。
+3. 运行 `npm run validate:cards`。
 
 ## 检查流程
 

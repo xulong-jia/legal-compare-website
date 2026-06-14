@@ -155,8 +155,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                   合同法专题学习路径
                 </h2>
                 <p className="mt-3 text-sm leading-6 text-zinc-700">
-                  本专题目前包含 {contractLawTopic.cardCount} 张卡片，按照“合同成立 → 合同解释与效力 →
-                  违约与救济”的顺序组织，适合从基础概念逐步进入制度比较。
+                  本专题目前包含 {contractLawTopic.cardCount} 张卡片，按照“四阶段”结构组织，适合从基础概念逐步进入制度比较和进阶专题。
                 </p>
                 <div className="mt-5">
                   <p className="text-sm font-medium text-zinc-900">快速跳转：</p>

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { contractLawTopic } from "@/lib/contractLawTopic";
+import { contractLawStages, contractLawTopic } from "@/lib/contractLawTopic";
 
 export const metadata = {
   title: "中外法律制度对照 | 比较法学习知识库",
@@ -21,6 +21,7 @@ const mvpItems = [
   `${contractLawTopic.cardCount} 张合同法制度卡片`,
 ];
 const excludedItems = ["登录", "收藏", "评论", "付费", "AI 问答", "复杂搜索"];
+const stageSummary = contractLawStages.map((stage) => stage.title).join(" / ");
 
 export default function Home() {
   return (
@@ -40,7 +41,7 @@ export default function Home() {
             当前已上线合同法专题学习路径，包含 {contractLawTopic.cardCount} 张中外法律制度比较卡片。
           </p>
           <p className="mt-4 text-base leading-7 text-zinc-600">
-            学习路径按“合同成立基础 / 合同内容、解释与效力 / 违约与救济”组织。
+            学习路径按“{stageSummary}”四阶段组织。
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Link
@@ -66,8 +67,7 @@ export default function Home() {
               合同法专题学习路径
             </h2>
             <p className="mt-3 text-sm leading-6 text-zinc-700">
-              已上线 10 张卡片，按“合同成立基础 / 合同内容、解释与效力 /
-              违约与救济”三个阶段组织。
+              已上线 {contractLawTopic.cardCount} 张卡片，按“{stageSummary}”四个阶段组织。
             </p>
             <div className="mt-5 flex flex-col gap-3 sm:flex-row">
               <Link
