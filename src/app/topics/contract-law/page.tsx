@@ -40,6 +40,9 @@ export default function ContractLawTopicPage() {
           <p className="mt-5 text-base leading-7 text-zinc-700">
             本专题用于比较中国法、大陆法系与普通法中合同法的基础制度，适合法律初学者和中外法律制度比较学习者。
           </p>
+          <p className="mt-3 text-base leading-7 text-zinc-700">
+            本专题属于“民法”分类，聚焦合同法制度比较。
+          </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Link
               href={contractLawTopic.categoryPath}

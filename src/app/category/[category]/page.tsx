@@ -152,10 +152,10 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
             <div className="space-y-8">
               <div className="rounded-md border border-zinc-200 bg-zinc-50 p-6 shadow-sm">
                 <h2 className="text-xl font-semibold text-zinc-950">
-                  合同法专题学习路径
+                  民法分类下的合同法专题学习路径
                 </h2>
                 <p className="mt-3 text-sm leading-6 text-zinc-700">
-                  本专题目前包含 {contractLawTopic.cardCount} 张卡片，按照“四阶段”结构组织，适合从基础概念逐步进入制度比较和进阶专题。
+                  合同法是民法分类下的专题。本专题目前包含 {contractLawTopic.cardCount} 张卡片，按照“四阶段”结构组织，适合从基础概念逐步进入制度比较和进阶专题。
                 </p>
                 <div className="mt-5">
                   <p className="text-sm font-medium text-zinc-900">快速跳转：</p>

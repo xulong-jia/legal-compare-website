@@ -145,7 +145,7 @@ export default async function CardPage({ params }: CardPageProps) {
           </p>
           <div className="mt-5 flex flex-wrap gap-2 text-sm">
             <span className="rounded-md bg-zinc-100 px-3 py-1.5 text-zinc-700">
-              所属学习路径：{learningPath}
+              所属分类与专题：{learningPath}
             </span>
             {learningStage && (
               <span className="rounded-md bg-zinc-100 px-3 py-1.5 text-zinc-700">
